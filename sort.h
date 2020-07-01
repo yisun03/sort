@@ -11,11 +11,15 @@ namespace yis
 {
   class sort
   {
-    //十种排序算法
+    // 十种排序算法
+    // 算法实现的都是升序排序
 
   public:
-    //选择排序
+    // 选择排序
     static void sort_select(std::vector<int>& data);
+
+    // 插入排序
+    static void sort_insert(std::vector<int>& data);
   };
 }
 

@@ -8,7 +8,27 @@ int main()
 
   //测试选择排序.
   std::vector<int> unsorted_data = data;
+  std::cout << "original sequence:" << std::endl;
+  for(auto value : unsorted_data)
+  {
+    std::cout << value << std::endl;
+  }
   sort::sort_select(unsorted_data);
+  std::cout << "result of select sort:" << std::endl;
+  for(auto value : unsorted_data)
+  {
+    std::cout << value << std::endl;
+  }
+
+  //测试插入排序.
+  unsorted_data = data;
+  std::cout << "original sequence:" << std::endl;
+  for(auto value : unsorted_data)
+  {
+    std::cout << value << std::endl;
+  }
+  sort::sort_insert(unsorted_data);
+  std::cout << "result of insert sort:" << std::endl;
   for(auto value : unsorted_data)
   {
     std::cout << value << std::endl;
