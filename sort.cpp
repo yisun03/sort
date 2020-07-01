@@ -73,4 +73,44 @@ namespace yis
       data.at(k+1) = key;
     }
   }
+
+  void sort::sort_bubble(std::vector<int> &data)
+  {
+    // 思想：
+    // 在原始待排序序列上操作;
+    // 将原始待排序序列分成无序区和有序区两部分;
+    // 初始状态下整个原始序列为无序区,每遍历一遍就浮现出无序区最大的元素放在有序区;
+    // 随着遍历,最终无序区长度变为0,整个原始序列变为有序序列.
+
+    // 设置一个监控位,用于记录是否无序区碰巧为有序的,那么便免于对已经有序的序列排序.
+    int flag = 0;
+
+    // 获取序列元素个数.
+    auto length = data.size();
+    if(length < 2)
+    {
+      return;
+    }
+    // 开始遍历查找无序区最大值.
+    for(unsigned long i = 0; i < length; i++)
+    {
+      flag = 0;
+      for(unsigned long j = 0; j < length-i-1; j++)
+      {
+        if(data.at(j+1) < data.at(j))
+        {
+          // 无序区前一个元素大于它的后一个元素,需要交换位置以及设置本轮的监控位.
+          flag = 1;
+          auto temp = data.at(j);
+          data.at(j) = data.at(j+1);
+          data.at(j+1) = temp;
+        }
+      }
+      if(flag == 0)
+      {
+        // 如果监控位为0,则说明无序区已经是有序的了,排序完毕.
+        return;
+      }
+    }
+  }
 }

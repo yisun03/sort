@@ -33,4 +33,18 @@ int main()
   {
     std::cout << value << std::endl;
   }
+
+  //测试冒泡排序.
+  unsorted_data = data;
+  std::cout << "original sequence:" << std::endl;
+  for(auto value : unsorted_data)
+  {
+    std::cout << value << std::endl;
+  }
+  sort::sort_bubble(unsorted_data);
+  std::cout << "result of bubble sort:" << std::endl;
+  for(auto value : unsorted_data)
+  {
+    std::cout << value << std::endl;
+  }
 }

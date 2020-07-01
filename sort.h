@@ -20,6 +20,9 @@ namespace yis
 
     // 插入排序
     static void sort_insert(std::vector<int>& data);
+
+    // 冒泡排序
+    static void sort_bubble(std::vector<int>& data);
   };
 }
 
