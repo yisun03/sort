@@ -23,6 +23,10 @@ namespace yis
 
     // 冒泡排序
     static void sort_bubble(std::vector<int>& data);
+
+    // 希尔排序
+    static void sort_shell(std::vector<int>& data);
+    static void insert_i(std::vector<int>& data,int h,int i);
   };
 }
 
