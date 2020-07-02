@@ -257,4 +257,65 @@ namespace yis
       }
     }
   }
+
+  void sort::sort_quick(std::vector<int> &data, int left, int right)
+  {
+    // 思想：
+    // 在元素序列上直接操作;
+    // 每次在无序序列中选取一个数,一般称之为中轴数,
+    // 将元素序列分成两个部分,使得一部分的元素全都小于等于另一部分的所有元素;
+    // 也就是说将序列分成小于等于中轴数和大于等于中轴数的两部分,使得中轴数变为有序;
+    // 再递归的对分成的两部分进行划分操作.
+
+    if(left < right)
+    {
+      // 找到中轴数的索引.
+      int index = partition(data,left,right);
+      // 以中轴数的索引为界递归处理两个部分的序列.
+      sort_quick(data,left,index - 1);
+      sort_quick(data,index + 1,right);
+    }
+  }
+
+  int sort::partition(std::vector<int> &data, int left, int right)
+  {
+    // 找到中轴数的正确位置,同时将序列划分为两部分.
+    // 中轴数有很多种取法,我们这里采用《算法导论》里的选取方法,即取序列最后一个元素.
+    int key = data.at(right);
+    // 此处设置两个索引i和j,区间[left,i]为小于中轴数的序列,
+    // 区间[j,right-1]为大于中轴数的序列.
+    int i = left - 1;
+    for(int j = left; j < right; j++)
+    {
+      if(data.at(j) <= key)
+      {
+        // 大于中轴数的元素让它继续待在[j,right-1]区间什么也不做;
+        // 小于中轴数的元素全部从[j,right-1]区间放到[left,i]区间去.
+        ++i;
+        int temp = data.at(i);
+        data.at(i) = data.at(j);
+        data.at(j) = temp;
+      }
+    }
+    // 此时中轴数的正确位置应该在i+1,将其归位.
+    // 思考为什么是i+1而不是i.
+    int temp = data.at(i+1);
+    data.at(i+1) = data.at(right);
+    data.at(right) = temp;
+    // 返回中轴数的正确索引.
+    return i+1;
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

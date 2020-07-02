@@ -1,7 +1,9 @@
 #include <vector>
 #include <iostream>
 #include "sort.h"
+
 using namespace yis;
+
 int main()
 {
   std::vector<int> data = {629,345,465,24,2,71,630};
@@ -63,18 +65,18 @@ int main()
 //  }
 
   // 5.1 测试归并排序的递归实现
-  unsorted_data = data;
-  std::cout << "original sequence:" << std::endl;
-  for(auto value : unsorted_data)
-  {
-    std::cout << value << std::endl;
-  }
-  sort::sort_merge_recursive(unsorted_data,0,6);
-  std::cout << "result of recursive merge sort:" << std::endl;
-  for(auto value : unsorted_data)
-  {
-    std::cout << value << std::endl;
-  }
+//  unsorted_data = data;
+//  std::cout << "original sequence:" << std::endl;
+//  for(auto value : unsorted_data)
+//  {
+//    std::cout << value << std::endl;
+//  }
+//  sort::sort_merge_recursive(unsorted_data,0,6);
+//  std::cout << "result of recursive merge sort:" << std::endl;
+//  for(auto value : unsorted_data)
+//  {
+//    std::cout << value << std::endl;
+//  }
 
   // 5.2 测试归并排序的非递归实现
   unsorted_data = data;
@@ -85,6 +87,20 @@ int main()
   }
   sort::sort_merge_non_recursive(unsorted_data);
   std::cout << "result of non recursive merge sort:" << std::endl;
+  for(auto value : unsorted_data)
+  {
+    std::cout << value << std::endl;
+  }
+
+  // 6 测试快速排序
+  unsorted_data = data;
+  std::cout << "original sequence:" << std::endl;
+  for(auto value : unsorted_data)
+  {
+    std::cout << value << std::endl;
+  }
+  sort::sort_quick(unsorted_data,0,6);
+  std::cout << "result of quick sort:" << std::endl;
   for(auto value : unsorted_data)
   {
     std::cout << value << std::endl;

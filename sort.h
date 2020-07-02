@@ -34,6 +34,10 @@ namespace yis
 
     // 5.2 归并排序-非递归实现.
     static void sort_merge_non_recursive(std::vector<int>& data);
+    // 非递归用到的merge()函数和递归使用的merge()是一样的.
+
+    static void sort_quick(std::vector<int>& data, int left, int right);
+    static int partition(std::vector<int>& data, int left, int right);
   };
 }
 
