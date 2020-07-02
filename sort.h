@@ -45,10 +45,13 @@ namespace yis
     static void sort_quick_non_recursive(std::vector<int>& data, int left, int right);
     // 非递归用到的partition()函数和递归使用的partition()是一样的.
 
-    // 7 堆排序
+    // 7 堆排序.
     static void sort_heap(std::vector<int>& data);
     static void down_adjust(std::vector<int>& data, int parent, int length);
     static void up_adjust(std::vector<int>& data, int length);
+
+    // 8 计数排序.
+    static void sort_count(std::vector<int>& data);
   };
 }
 
