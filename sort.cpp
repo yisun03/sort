@@ -219,4 +219,42 @@ namespace yis
       data.at(left++) = temp.at(n);
     }
   }
+
+  void sort::sort_merge_non_recursive(std::vector<int> &data)
+  {
+    // 思想：
+    // 归并排序这里不再是直接在原始序列上进行操作;
+    // 归并排序利用的是分而治之的思想,将序列分成两个子序列,将两个子序列排好序后合并为有序的序列;
+    // 而对两个子序列进行排序同样用分而治之,如此递归下去;
+    // 归并分为三步：分,治,合;治是关键,而治又是最简单的,将序列分为只有一个元素的两个子序列后自然变得有序;
+    // 所以归并可以分为两步：将序列一直分成只有一个元素的子序列,然后将这些有序的子序列合并.
+
+    // 获取序列长度.
+    int length = data.size();
+    // 开始合并子序列,子序列长度为1,2,4,8....成倍增长(初始子序列长度必须为1,思考为什么).
+    for(int i = 1; i < length; i *= 2)
+    {
+      // 划分子序列.
+      int left = 0;
+      int mid = left + i - 1;
+      int right = mid + i;
+      // 开始合并.
+      // 注意此处while语句的结合条件,思考有什么问题.
+      while(right < length)
+      {
+        // 合并函数和递归实现的合并函数一样.
+        merge(data, left, mid, right);
+        // 更新left,mid,right以合并下一对序列.
+        left = right +1;
+        mid = left + i -1;
+        right = mid + i;
+      }
+      // while条件是有问题的,因为right = mid + i,随意可能出现情况： right < length < right + i;
+      // 这样会导致right后面到length可能有元素被遗漏,没有对他们进行排序,此处要单独处理.
+      if((left < length) && (mid < length))
+      {
+        merge(data,left,mid,length - 1);
+      }
+    }
+  }
 }
