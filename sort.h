@@ -6,6 +6,7 @@
 #define SORT_SORT_H
 
 #include <vector>
+#include <stack>
 
 namespace yis
 {
@@ -36,8 +37,13 @@ namespace yis
     static void sort_merge_non_recursive(std::vector<int>& data);
     // 非递归用到的merge()函数和递归使用的merge()是一样的.
 
-    static void sort_quick(std::vector<int>& data, int left, int right);
+    // 6.1 快速排序-递归实现.
+    static void sort_quick_recursive(std::vector<int>& data, int left, int right);
     static int partition(std::vector<int>& data, int left, int right);
+
+    // 6.2 快速排序-非递归实现.
+    static void sort_quick_non_recursive(std::vector<int>& data, int left, int right);
+    // 非递归用到的partition()函数和递归使用的partition()是一样的.
   };
 }
 

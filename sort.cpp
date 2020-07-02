@@ -258,7 +258,7 @@ namespace yis
     }
   }
 
-  void sort::sort_quick(std::vector<int> &data, int left, int right)
+  void sort::sort_quick_recursive(std::vector<int> &data, int left, int right)
   {
     // 思想：
     // 在元素序列上直接操作;
@@ -272,8 +272,8 @@ namespace yis
       // 找到中轴数的索引.
       int index = partition(data,left,right);
       // 以中轴数的索引为界递归处理两个部分的序列.
-      sort_quick(data,left,index - 1);
-      sort_quick(data,index + 1,right);
+      sort_quick_recursive(data,left,index - 1);
+      sort_quick_recursive(data,index + 1,right);
     }
   }
 
@@ -304,6 +304,58 @@ namespace yis
     data.at(right) = temp;
     // 返回中轴数的正确索引.
     return i+1;
+  }
+
+  void sort::sort_quick_non_recursive(std::vector<int> &data, int left, int right)
+  {
+    // 思想：
+    // 在元素序列上直接操作;
+    // 每次在无序序列中选取一个数,一般称之为中轴数,
+    // 将元素序列分成两个部分,使得一部分的元素全都小于等于另一部分的所有元素;
+    // 也就是说将序列分成小于等于中轴数和大于等于中轴数的两部分,使得中轴数变为有序;
+    // 再递归的对分成的两部分进行划分操作.
+
+    // 非递归利用栈来实现.
+    // 利用栈来存储子序列的起点后终点(其实递归也是通过调用系统堆栈来保护调用现场的).
+    std::stack<int> s;
+    if(left < right)
+    {
+      // 找到中轴数的索引.
+      int index = partition(data, left, right);
+      // 如果中轴数索引两个分区存在,则将起点和终点入栈.
+      if(index - 1 > left)
+      {
+        // 下面的入栈顺序要和此处一致.
+        s.push(left);
+        s.push(index - 1);
+      }
+      if(index + 1 < right)
+      {
+        s.push(index + 1);
+        s.push(right);
+      }
+      // 从栈里面取出序列并找到该序列中轴数的正确索引.
+      while(!s.empty())
+      {
+        // 注意顺序.
+        int r = s.top();
+        s.pop();
+        int l = s.top();
+        s.pop();
+        index = partition(data, l, r);
+        // 将新的序列区间入栈.
+        if(index - 1 > l)
+        {
+          s.push(l);
+          s.push(index - 1);
+        }
+        if(index + 1 < r)
+        {
+          s.push(index + 1);
+          s.push(r);
+        }
+      }
+    }
   }
 }
 

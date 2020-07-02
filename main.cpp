@@ -64,7 +64,7 @@ int main()
 //    std::cout << value << std::endl;
 //  }
 
-  // 5.1 测试归并排序的递归实现
+  // 5.1 测试归并排序的递归实现.
 //  unsorted_data = data;
 //  std::cout << "original sequence:" << std::endl;
 //  for(auto value : unsorted_data)
@@ -78,29 +78,43 @@ int main()
 //    std::cout << value << std::endl;
 //  }
 
-  // 5.2 测试归并排序的非递归实现
-  unsorted_data = data;
-  std::cout << "original sequence:" << std::endl;
-  for(auto value : unsorted_data)
-  {
-    std::cout << value << std::endl;
-  }
-  sort::sort_merge_non_recursive(unsorted_data);
-  std::cout << "result of non recursive merge sort:" << std::endl;
-  for(auto value : unsorted_data)
-  {
-    std::cout << value << std::endl;
-  }
+  // 5.2 测试归并排序的非递归实现.
+//  unsorted_data = data;
+//  std::cout << "original sequence:" << std::endl;
+//  for(auto value : unsorted_data)
+//  {
+//    std::cout << value << std::endl;
+//  }
+//  sort::sort_merge_non_recursive(unsorted_data);
+//  std::cout << "result of non recursive merge sort:" << std::endl;
+//  for(auto value : unsorted_data)
+//  {
+//    std::cout << value << std::endl;
+//  }
 
-  // 6 测试快速排序
+  // 6.1 测试快速排序-递归实现.
+//  unsorted_data = data;
+//  std::cout << "original sequence:" << std::endl;
+//  for(auto value : unsorted_data)
+//  {
+//    std::cout << value << std::endl;
+//  }
+//  sort::sort_quick_recursive(unsorted_data,0,6);
+//  std::cout << "result of recursive quick sort:" << std::endl;
+//  for(auto value : unsorted_data)
+//  {
+//    std::cout << value << std::endl;
+//  }
+
+  // 6.2 测试快速排序-非递归实现.
   unsorted_data = data;
   std::cout << "original sequence:" << std::endl;
   for(auto value : unsorted_data)
   {
     std::cout << value << std::endl;
   }
-  sort::sort_quick(unsorted_data,0,6);
-  std::cout << "result of quick sort:" << std::endl;
+  sort::sort_quick_non_recursive(unsorted_data,0,6);
+  std::cout << "result of noe recursive quick sort:" << std::endl;
   for(auto value : unsorted_data)
   {
     std::cout << value << std::endl;
