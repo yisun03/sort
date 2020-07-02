@@ -2,6 +2,7 @@
 // Created by yis on 2020/7/1.
 //
 
+#include <iostream>
 #include "sort.h"
 
 namespace yis
@@ -356,6 +357,88 @@ namespace yis
         }
       }
     }
+  }
+
+  void sort::sort_heap(std::vector<int> &data)
+  {
+    // 思想：
+    // 在原始序列上直接操作.
+    // 利用二叉堆的数据结构来实现排序,二叉堆是一个完全二叉数.
+    // 二叉堆的特点是堆顶元素是一个最值(大顶堆的堆顶为最大值,小顶堆的堆顶为最小值);
+    // 大顶堆：任意节点的元素都要大于他的子节点元素,小顶堆：任意节点的元素都要小于他的子节点元素.
+    // 排序方法是将堆顶元素和最后一个元素交换,然后恢复大/小顶堆;再将堆顶元素和最后第二个元素交换,以此类推.
+    // 排序第一步是需要将原始数据构建乘二叉堆(升序排序构建大顶堆,降序排序构建小顶堆),我们升序排序所以构建大顶堆;
+    // 第二步是调整使之重新成为大顶堆,我们使用从最后一个非叶子节点往上进行下沉处理(down_adjust()).
+    // 此处我们提供了二叉堆的插入元素后维护二叉堆的操作,采用上浮处理(up_adjust).
+
+    // 建堆：从最后一个非叶子节点往上做下沉操作.
+    int length = data.size();
+    // 思考为什么是减2.
+    for(int i = (length - 2)/2; i >= 0; i--)
+    {
+      down_adjust(data,i,length -1);
+    }
+    // 开始堆排序
+    for(int i = length -1; i > 0; i--)
+    {
+      // 将堆顶节点与节点i交换.
+      int temp = data.at(0);
+      data.at(0) = data.at(i);
+      data.at(i) = temp;
+      // 恢复二叉堆.
+      down_adjust(data,0,i - 1);
+    }
+  }
+
+  void sort::down_adjust(std::vector<int> &data, int parent, int length)
+  {
+    // 对parent节点做下沉操作.
+    // 临时保存要下沉的节点.
+    int key = data.at(parent);
+    // 定位左子节点.
+    int child = 2 * parent + 1;
+    while(child <= length)
+    {
+      // 定位parent的较大的子节点.
+      if(child + 1 <= length && data.at(child) < data.at(child + 1))
+      {
+        ++child;
+      }
+      // 如果parent节点的元素大于子节点的元素,则下沉完成.
+      if(key >= data.at(child))
+      {
+        // 注意此处是break而不是return(想想为什么).
+        break;
+      }
+      // 需要下沉,将child节点放到父节点.
+      data.at(parent) = data.at(child);
+      // 更新parent和child,以便继续下沉操作.
+      parent = child;
+      child = 2 * parent +1;
+    }
+    // 找到下沉位置后将下沉元素放到正确位置上后完成操作.
+    data.at(parent) = key;
+  }
+
+  void sort::up_adjust(std::vector<int> &data, int length)
+  {
+    // 将末节点上浮到适当位置.
+    // 定位父子节点.
+    int child = length - 1;
+    int parent = (child - 1)/2;
+    // 临时保存需要上浮的节点.
+    int key = data.at(child);
+    // 开始上浮(大顶堆)
+    while(child > 0 && key > data.at(parent))
+    {
+      // 如果要上浮的节点元素大于父节点,则将parent节点放到其子节点上.
+      data.at(child) = data.at(parent);
+      // 更新parent和child,以继续上浮操作.
+      child = parent;
+      parent = (child - 1)/2;
+    }
+    // 找到上浮位置后,将要上浮的节点放进去.
+    data.at(child) = key;
   }
 }
 
