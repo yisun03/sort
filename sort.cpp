@@ -156,4 +156,67 @@ namespace yis
     // 已找到要插入的位置为k+h,插入.
     data.at(k+h) = temp;
   }
+
+  void sort::sort_merge_recursive(std::vector<int> &data, int left, int right)
+  {
+    // 思想：
+    // 归并排序这里不再是直接在原始序列上进行操作;
+    // 归并排序利用的是分而治之的思想,将序列分成两个子序列,将两个子序列排好序后合并为有序的序列;
+    // 而对两个子序列进行排序同样用分而治之,如此递归下去;
+    // 归并分为三步：分,治,合;治是关键,而治又是最简单的,将序列分为只有一个元素的两个子序列后自然变得有序;
+    // 所以归并可以分为两步：将序列一直分成只有一个元素的子序列,然后将这些有序的子序列合并.
+
+    if(left < right)
+    {
+      // 将序列一分为二并获取中间位置.
+      int mid = (left + right)/2;
+      // 递归处理两个子序列使之有序.
+      sort_merge_recursive(data, left, mid);
+      sort_merge_recursive(data, mid + 1, right);
+      // 合并两个有序子序列后结束归并排序.
+      merge(data, left, mid, right);
+    }
+  }
+
+  void sort::merge(std::vector<int> &data, int left, int mid, int right)
+  {
+    // 将有序的两个子序列合并.
+    // 获取两个子序列的第一个元素.
+    int i = left;
+    int j = mid + 1;
+    // 创建临时容器来保存合并结果,同时指定容器大小.
+    std::vector<int> temp;
+    temp.resize(right - left + 1);
+    // 开始合并.
+    int k = 0;
+    while((i <= mid) && (j <= right))
+    {
+      if(data.at(i) <= data.at(j))
+      {
+        temp.at(k++) = data.at(i++);
+      }
+      else
+      {
+        // data.at(j) < data.at(i);
+        temp.at(k++) = data.at(j++);
+      }
+    }
+    // 到此为止肯定有一个子序列已经完全放到临时容器里,现在将另子序列的元素放入临时容器.
+    while(i <= mid)
+    {
+      temp.at(k++) = data.at(i++);
+    }
+    while(j <= right)
+    {
+      temp.at(k++) = data.at(j++);
+    }
+    // 最后将临时容器里的元素复制到原容器完成合并.
+    // 切记这里不能直接使用赋值：data = temp;
+    // 因为这是递归操作,如果这样赋值,那么data的长度会变成2(思考一下为什么是2),
+    // 那么后续操作中会导致"std::out_of_range"错误.
+    for(int n = 0; n < k; n++)
+    {
+      data.at(left++) = temp.at(n);
+    }
+  }
 }
