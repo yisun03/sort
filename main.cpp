@@ -71,7 +71,7 @@ int main()
   {
     std::cout << value << std::endl;
   }
-  sort::sort_merge_recursive(unsorted_data,0,6);
+  sort::sort_merge_recursive(unsorted_data, 0, 6);
   std::cout << "result of recursive merge sort:" << std::endl;
   for(auto value : unsorted_data)
   {
@@ -99,7 +99,7 @@ int main()
   {
     std::cout << value << std::endl;
   }
-  sort::sort_quick_recursive(unsorted_data,0,6);
+  sort::sort_quick_recursive(unsorted_data, 0, 6);
   std::cout << "result of recursive quick sort:" << std::endl;
   for(auto value : unsorted_data)
   {
@@ -113,7 +113,7 @@ int main()
   {
     std::cout << value << std::endl;
   }
-  sort::sort_quick_non_recursive(unsorted_data,0,6);
+  sort::sort_quick_non_recursive(unsorted_data, 0, 6);
   std::cout << "result of noe recursive quick sort:" << std::endl;
   for(auto value : unsorted_data)
   {
