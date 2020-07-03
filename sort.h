@@ -8,6 +8,7 @@
 #include <vector>
 #include <stack>
 #include <list>
+#include <cmath>
 
 namespace yis
 {
@@ -49,6 +50,7 @@ namespace yis
     // 7 堆排序.
     static void sort_heap(std::vector<int>& data);
     static void down_adjust(std::vector<int>& data, int parent, int length);
+    // 堆排序没有用到上浮函数,它用于在堆尾插入元素后进行上浮以维护二叉堆的特性.
     static void up_adjust(std::vector<int>& data, int length);
 
     // 8 计数排序.
@@ -56,6 +58,10 @@ namespace yis
 
     // 9 桶排序.
     static void sort_bucket(std::vector<int>& data);
+    // 会用到非递归快速排序函数：sort_quick_non_recursive().
+
+    // 10 基数排序.
+    static void sort_radix(std::vector<int>& data);
   };
 }
 

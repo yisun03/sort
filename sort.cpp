@@ -558,6 +558,66 @@ namespace yis
     // 5.将有序序列赋给data.
     data = sorted_sequence;
   }
+
+  void sort::sort_radix(std::vector<int> &data)
+  {
+    // 思想：
+    // 使用了桶排序中桶的思想,但它比桶排序更精明,它只需要十个桶,因为他的排序思想是分别对元素中的个位,十位,百位....进行排序.
+    // 也就是说,首先对所有数以个位数的大小进行排序,然后再对所有数以他们的十位数进行排序,依次类推.
+    // 在整个过程中会使得原始序列逐渐趋近有序,待将最高位排完之后完全有序.
+    // 想想为什么是从个位开始而不是从最高位开始呢,按道理从最高位开始的话每次都能得出一部分数的正确大小关系.
+    // 确实可以从最高位开始,而且可以减少比较次数,但是从最高位开始会有一个致命缺点,那就是在如果从高位开始,在对高位相同的
+    // 数继续排序时,又需要另外创建十个桶对他们排序,其实也就是说最终的结果就是真多每一个不同的元素都会为它创建一个桶,
+    // 如果待排序序列有10000个不同的元素,那么从高位开始比较的方法就需要创建10000个桶,而从个位开始比较的方法可以重复使用
+    // 那10个桶,如果序列个数更多那么这样的性能差异就更明显,所以虽然减少了比较次数但浪费了非常多的空间,得不偿失.
+    // 所以我们说基数排序的话都默认的是从个位开始比较的.
+    if(data.size() < 2)
+    {
+      return;
+    }
+    // 遍历待排序序列获取最大值,并计算出最大值的位数digits,这决定我们要循环排序的次数.
+    int length = static_cast<int>(data.size());
+    int max = data.at(0);
+    for(int i = 1; i < length; i++)
+    {
+      if(data.at(i) > max)
+      {
+        max = data.at(i);
+      }
+    }
+    // 计算最大值位数.
+    int digits = 1;
+    while(max/10 > 0)
+    {
+      ++digits;
+      max /= 10;
+    }
+    // 创建10个桶,因为需要频繁地往桶里面插入元素,所以我们使用list容器,将十个桶放入vector中.
+    std::vector<std::list<int>> bucket_list;
+    bucket_list.resize(10);
+    // 从个位开始进行每一趟的排序,其实就是将待排序序列的元素放入当前排序位数(个/十/百...)数字对应的桶中.
+    for(int i = 1; i <= digits; i++)
+    {
+      for(int j = 0; j < length; j++)
+      {
+        // 计算出当前元素data.at(j)在本轮属于哪一个桶.
+        // pow()函数需要include<cmath>.
+        int radix = static_cast<int>(data.at(j)/pow(10,i-1)) % 10;
+        bucket_list.at(radix).push_back(data.at(j));
+      }
+      // 每完成一轮便将桶里的元素按顺序合并放入原序列.
+      int k = 0;
+      for(int n = 0; n < 10; n++)
+      {
+        for(auto value : bucket_list.at(n))
+        {
+          data.at(k++) = value;
+        }
+        // 同时需要将桶清空以便下一轮的排序.
+        bucket_list.at(n).clear();
+      }
+    }
+  }
 }
 
 

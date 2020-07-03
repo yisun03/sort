@@ -162,4 +162,17 @@ int main()
     std::cout << value << std::endl;
   }
 
+  // 9 测试基数排序.
+  unsorted_data = data;
+  std::cout << "original sequence:" << std::endl;
+  for(auto value : unsorted_data)
+  {
+    std::cout << value << std::endl;
+  }
+  sort::sort_radix(unsorted_data);
+  std::cout << "result of radix sort:" << std::endl;
+  for(auto value : unsorted_data)
+  {
+    std::cout << value << std::endl;
+  }
 }
