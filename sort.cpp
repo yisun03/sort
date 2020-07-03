@@ -503,6 +503,61 @@ namespace yis
     // 5.最后将已排序容器赋给原始序列,排序结束.
     data = sorted_data;
   }
+
+  void sort::sort_bucket(std::vector<int> &data)
+  {
+    // 思想：
+    // 桶排序是计数排序的一个优化,它解决了计数排序只适用于整数排序的限制,更是解决了不适用于最大值和最小值差值很大的情况.
+    // 桶排序的思想就是对最小值和最小值之间的元素进行瓜分,将他们分为多个区间,每个区间用一个桶（其实就是一个容器）来装.
+    // 前一个桶里的元素全都小于后一个桶里的元素,只需要利用别的常规排序算法将桶里面的元素进行排序使之有序即可使得原序列有序.
+    // 这里我们使用快速排序对桶内的元素进行排序.
+    // 1.遍历待排序序列获取其中最大值和最小值,并计算他们的差值d.
+    int max = data.at(0);
+    int min = data.at(0);
+    for(int i = 1; i < static_cast<int>(data.size()); i++)
+    {
+      if(max < data.at(i))
+      {
+        max = data.at(i);
+      }
+      if(min > data.at(i))
+      {
+        min= data.at(i);
+      }
+    }
+    int d = max - min;
+    // 2.初始化桶,桶因为要频繁插入元素,所以用List数据结构,然后所有的桶放在vector容器中.
+    std::vector<std::list<int>> bucket_list;
+    // 我们将桶的个数设置为原序列元素个数.
+    int bucket_num = data.size();
+    bucket_list.resize(bucket_num);
+    // 3.遍历原序列,将元素放到合适的桶中.
+    for(int value : data)
+    {
+      // 定位元素所属的桶的索引.
+      // 桶所有的桶平均划分最大值和最小值d的区间,value-min是当前元素与最小值的差值(区间).
+      // bucket_num-1是总的区间个数,则d/(bucket_num-1)代表一个区间的长度.
+      // 那么整个表达式得到的index则为当前元素value所跨越的区间个数,也就是当前元素所在的桶的索引.
+      int index = (value-min)/(d/(bucket_num-1));
+      // 将当前元素放进桶里面去.
+      bucket_list.at(index).push_back(value);
+    }
+    // 4.对每个桶进行排序,我们采用快速排序.
+    // 依次将每个桶里的元素排好序后放入sorted_sequence中.
+    std::vector<int> sorted_sequence;
+    for(auto bucket : bucket_list)
+    {
+      // 因为我们之前写的快排是对vector<int>进行排序,所以我们使用一个辅助容器.
+      // 我们完全可以重新写一个针对list<int>的快排算法,这样会提高时间和空间复杂度,此处我们就使用现成的.
+      std::vector<int> auxiliary;
+      auxiliary.assign(bucket.begin(),bucket.end());
+      sort_quick_non_recursive(auxiliary,0, static_cast<int>(auxiliary.size()-1));
+      // 将当前桶内元素排好序后放入sorted_sequence容器尾部.
+      sorted_sequence.insert(sorted_sequence.end(),auxiliary.begin(),auxiliary.end());
+    }
+    // 5.将有序序列赋给data.
+    data = sorted_sequence;
+  }
 }
 
 

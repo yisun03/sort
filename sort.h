@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <stack>
+#include <list>
 
 namespace yis
 {
@@ -52,6 +53,9 @@ namespace yis
 
     // 8 计数排序.
     static void sort_count(std::vector<int>& data);
+
+    // 9 桶排序.
+    static void sort_bucket(std::vector<int>& data);
   };
 }
 
